@@ -1,0 +1,27 @@
+Run the application.
+    - npm run dev:electron
+
+run the react web browser
+    - npm run dev:react
+
+run the build 
+    - npm run build
+
+build the app on the respective systems
+    windows
+        - npm run dist:win
+    mac
+        - npm run dist:mac
+    linux
+        - npm run dist:linux
+
+when we wanna setup the system 
+    - npm run build
+    - npm run dev
+        which runs the following
+        - dev:react 
+            - vite
+        - dev:electron
+            - transpile:electron
+                - tsc --project src/electron/tsconfig.json
+            - cross-env NODE_ENV=development electron
