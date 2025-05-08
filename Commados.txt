@@ -1,0 +1,8 @@
+Run the application.
+    - npm run dev:electron
+
+run the react web browser
+    - npm run dev:react
+
+run the build 
+    - npm run build
