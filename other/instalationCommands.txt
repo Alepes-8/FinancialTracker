@@ -1,3 +1,4 @@
+- developer downloads
 npm install electron --save-dev
 npm install electron@latest --save-dev
 npm install react-router-dom
@@ -6,3 +7,7 @@ npm install --save-dev electron
 npm i --save-dev electron-builder
 npm i --save-dev cross-env
 npm i --save-dev npm-run-all
+
+
+- system downloads
+npm i os-utils  //cpu and ram functions. Probably don't need in the end of the system
