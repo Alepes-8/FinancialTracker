@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
-import { isDev } from './utils.js';
+import { ipcMainHandle, isDev } from './utils.js';
+import { getStaticBackendData, pullResources} from './resourceManager.js'
 import { getPreLoadPath } from './pathResolver.js';
 
 app.on('ready', () => {
@@ -16,4 +17,11 @@ app.on('ready', () => {
     }else{
         mainWindow.loadFile(path.join(app.getAppPath(),'/dist-react/index.html'));
     }
-})
+
+    pullResources(mainWindow);
+    //assyncronase call which instead of always sending things, this one can now handle to ba called from the frontend and return the getStaticBackendData information
+    //call await window.electron.getStaticBackendData()
+    ipcMainHandle("getStaticBackendData", () => {
+        return getStaticBackendData();
+    });
+});
