@@ -2,7 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import { ipcMainHandle, isDev } from './utils.js';
 import { getStaticBackendData, pullResources} from './resourceManager.js'
 import { getPreLoadPath, getUIPath } from './pathResolver.js';
-import { createTray } from './try.js';
+import { createTray } from './tray.js';
 import { createMenu } from './menu.js';
 
 app.on('ready', () => {

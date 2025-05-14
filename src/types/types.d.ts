@@ -18,5 +18,6 @@ interface Window {
     electron: {
         subscribeChangeView: (callback: (viewData: ViewData) => void) => UnsubscribeToRepeatedBackendResonseFunction;
         getStaticBackendData: () => Promise<StaticBackendData>;
+        
     };
 }
