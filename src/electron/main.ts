@@ -2,6 +2,8 @@ import { app, BrowserWindow } from 'electron';
 import { ipcMainHandle, isDev } from './utils.js';
 import { getStaticBackendData, pullResources} from './resourceManager.js'
 import { getPreLoadPath, getUIPath } from './pathResolver.js';
+import { createTray } from './try.js';
+import { createMenu } from './menu.js';
 
 app.on('ready', () => {
     const mainWindow = new BrowserWindow({
@@ -24,4 +26,34 @@ app.on('ready', () => {
     ipcMainHandle("getStaticBackendData", () => {
         return getStaticBackendData();
     });
+
+    //Sets the program image.
+    createTray(mainWindow);
+    handleCloseEvent(mainWindow);
+    createMenu(mainWindow);
 });
+
+
+function handleCloseEvent(mainWindow: BrowserWindow){
+    let willClose = false;
+
+    mainWindow.on('close', (e) => {
+        if(willClose){
+            return;
+        }
+
+        e.preventDefault();
+        mainWindow.hide();  
+        if (app.dock) {
+            app.dock.hide();
+        };
+    });
+
+    app.on('before-quit', () => {
+        willClose = true;
+    });
+
+    mainWindow.on('show', () => {
+        willClose = false;
+    })
+};

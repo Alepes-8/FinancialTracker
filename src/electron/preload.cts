@@ -4,9 +4,9 @@ const electron = require('electron');
 //This is in order to creat protection for the UI everything it wants to.
 //avoid giving to many privlages in order to minimise security risks.
 electron.contextBridge.exposeInMainWorld('electron', { 
-    sendDataToFrontEndListener: (callback) => {
-        return ipcOn('SubScribeToRepeatedBackendData', (response: SubScribeToRepeatedBackendData) => {
-            callback(response);
+    subscribeChangeView: (callback) => {
+        return ipcOn('subscribeChangeView', (stats) => {
+            callback(stats);
         });
     },
     getStaticBackendData: () => ipcInvoke('getStaticBackendData'),
@@ -27,5 +27,11 @@ function ipcOn<Key extends keyof EventPlayLoadMapping>(
     const cb = (_ : Electron.IpcRendererEvent, payload: any) => callback(payload)
     electron.ipcRenderer.on(key, cb);
     return () => electron.ipcRenderer.off(key, cb);
+}
 
+function sendFn<Key extends keyof EventPlayLoadMapping>(
+  channel: Key,
+  payload: EventPlayLoadMapping[Key]
+) {
+  return electron.ipcRenderer.send(channel, payload);
 }
