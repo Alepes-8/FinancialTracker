@@ -8,7 +8,7 @@ const SENDING_INTERVAL = 2000;
 export function pullResources(mainWindow: BrowserWindow){
     setInterval(async () => {
         const message = await getBackendMessage();
-        ipcWebContentsSend('repeatedBackendResponse', mainWindow.webContents, {log: message})
+        ipcWebContentsSend('SubScribeToRepeatedBackendData', mainWindow.webContents, {log: message})
     }, SENDING_INTERVAL)
 }
 

@@ -1,4 +1,4 @@
-type RepeatedBackendResponse = {
+type SubScribeToRepeatedBackendData = {
     log: number
 }
 
@@ -8,13 +8,15 @@ type StaticBackendData = {
 
 //the different events that we are using
 type EventPlayLoadMapping = {
-    repeatedBackendResponse: RepeatedBackendResponse,
-    getStaticBackendData: GetStaticBackendData
+    SubScribeToRepeatedBackendData: SubScribeToRepeatedBackendData,
+    getStaticBackendData: GetStaticBackendData,
 }
+
+type UnsubscribeToRepeatedBackendResonseFunction = () => void;
 
 interface Window {
     electron: {
-        sendDataToFrontEndListener: (callback: (repeatedBackendResponse: RepeatedBackendResponse) => void) => void;
-        getStaticBackendData: () => Promise<StaticBackendData>
+        sendDataToFrontEndListener: (callback: (subScribeToRepeatedBackendData: SubScribeToRepeatedBackendData) => void) => UnsubscribeToRepeatedBackendResonseFunction;
+        getStaticBackendData: () => Promise<StaticBackendData>;
     };
 }
