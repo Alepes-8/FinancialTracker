@@ -1,6 +1,6 @@
 import osUtils from 'os-utils';
 import { BrowserWindow } from 'electron';
-import { ipcWebContentsSend } from './utils.js';
+import { ipcMainOn, ipcWebContentsSend } from './utils.js';
 
 const SENDING_INTERVAL = 2000;
 
@@ -16,6 +16,13 @@ export function getStaticBackendData() {
     const totalStorage = 100;
     return {sum: totalStorage};
 }
+
+export function printPayLoadListner(){
+    ipcMainOn('sendCreateExpense', (payload) => {
+        console.log('Received expense from renderer:', payload.name, payload.value);
+    });
+}
+
 
 function getBackendMessage() : Promise<number>{
     return new Promise(resolve => {

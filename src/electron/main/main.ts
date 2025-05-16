@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import { ipcMainHandle, isDev } from './utils.js';
-import { getStaticBackendData, pullResources} from './resourceManager.js'
+import { getStaticBackendData, printPayLoadListner, pullResources} from './resourceManager.js'
 import { getPreLoadPath, getUIPath } from './pathResolver.js';
 import { createTray } from './tray.js';
 import { createMenu } from './menu.js';
@@ -27,6 +27,8 @@ app.on('ready', () => {
         return getStaticBackendData();
     });
 
+    printPayLoadListner();
+    
     //Sets the program image.
     createTray(mainWindow);
     handleCloseEvent(mainWindow);

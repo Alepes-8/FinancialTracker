@@ -31,6 +31,20 @@ export function ipcWebContentsSend<Key extends keyof EventPlayLoadMapping>(
     webContents.send(key, payload);
 }
 
+//A backend constant listner for the frontend.
+export function ipcMainOn<Key extends keyof EventPlayLoadMapping>(
+  key: Key,
+  callback: (payload: EventPlayLoadMapping[Key]) => void
+): () => void {
+  const cb = (_event: Electron.IpcMainEvent, payload: EventPlayLoadMapping[Key]) => {
+    callback(payload);
+  };
+
+  ipcMain.on(key, cb);
+  return () => ipcMain.off(key, cb);
+}
+
+
 //validate if we are in the correct path
 export function validateEventFrame(frame: WebFrameMain) {
     //Are we in the dev build, is the address correct

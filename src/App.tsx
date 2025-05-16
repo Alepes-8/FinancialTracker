@@ -30,6 +30,10 @@ function App() {
     }
   };
 
+  const sendMessageBackend = () => {
+        window.electron.sendCreateExpense({name:'jone doe', value: 10});
+  }
+
 
   return (
     <>
@@ -45,6 +49,9 @@ function App() {
         </button>
         <button onClick={toggleDataListener}>
           {unsub ? 'Stop Listening' : 'Start Listening'}
+        </button>
+         <button onClick={sendMessageBackend}>
+          send message
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
