@@ -1,1 +1,1 @@
-{"root":["./src/types/types.d.ts","./src/ui/app.tsx","./src/ui/main.tsx","./src/ui/vite-env.d.ts"],"version":"5.8.3"}
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/types/types.d.ts"],"version":"5.8.3"}
