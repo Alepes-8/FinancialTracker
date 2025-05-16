@@ -22,7 +22,7 @@ function App() {
       console.log("Stopped listening to data.");
     } else {
       // Start listening
-      const newUnsub = window.electron.subscribeChangeView((response) => {
+      const newUnsub = window.electron.subscribeData((response) => {
         console.log("Received:", response);
       });
       setUnsub(() => newUnsub); // store unsub function

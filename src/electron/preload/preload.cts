@@ -4,8 +4,8 @@ const electron = require('electron');
 //This is in order to creat protection for the UI everything it wants to.
 //avoid giving to many privlages in order to minimise security risks.
 electron.contextBridge.exposeInMainWorld('electron', { 
-    subscribeChangeView: (callback) => {
-        return ipcOn('subscribeChangeView', (stats) => {
+    subscribeData: (callback) => {
+        return ipcOn('subscribeData', (stats) => {
             callback(stats);
         });
     },
