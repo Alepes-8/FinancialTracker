@@ -8,7 +8,7 @@ type StaticBackendData = {
 
 //the different events that we are using
 type EventPlayLoadMapping = {
-    subscribeChangeView: SubscribeChangeView,
+    subscribeStats: SubscribeStats,
     getStaticBackendData: GetStaticBackendData,
 }
 
@@ -16,8 +16,7 @@ type UnsubscribeToRepeatedBackendResonseFunction = () => void;
 
 interface Window {
     electron: {
-        subscribeChangeView: (callback: (viewData: ViewData) => void) => UnsubscribeToRepeatedBackendResonseFunction;
+        subscribeStats: (callback: (subscribeStats: SubscribeStats) => void) => UnsubscribeToRepeatedBackendResonseFunction;
         getStaticBackendData: () => Promise<StaticBackendData>;
-        
     };
 }

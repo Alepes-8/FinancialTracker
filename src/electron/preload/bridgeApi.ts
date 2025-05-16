@@ -1,8 +1,8 @@
 import { ipcInvoke, ipcOn} from './ipcHelpers.js';
 
 export const api = {
-  subscribeChangeView: (callback) => {
-    return ipcOn('subscribeChangeView', callback);
+  subscribeStats: (callback) => {
+    return ipcOn('subscribeStats', callback);
   },
   getStaticBackendData: () => ipcInvoke('getStaticBackendData'),
 } satisfies Window['electron'];
