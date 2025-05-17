@@ -1,6 +1,6 @@
 import path from 'path'
 import { app } from 'electron'
-import { isDev } from "./utils.js";
+import { isDev } from "./main/utils.js";
 
 /* 
 * Returns the full path to the preload script used by Electron.
@@ -17,7 +17,7 @@ export function getPreLoadPath(){
     return path.join(
         app.getAppPath(),
         isDev() ? '.' : '..', 
-        '/dist-electron/preload.cjs'
+        '/dist-electron/preload/preload.cjs'
     )
 }
 

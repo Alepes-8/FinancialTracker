@@ -1,9 +1,9 @@
 import { app, BrowserWindow } from 'electron';
-import { ipcMainHandle, isDev } from './utils.js';
-import { getStaticBackendData, pullResources} from './resourceManager.js'
+import { ipcMainHandle, isDev } from './main/utils.js';
+import { getStaticBackendData, pullResources} from './main/resourceManager.js'
 import { getPreLoadPath, getUIPath } from './pathResolver.js';
-import { createTray } from './try.js';
-import { createMenu } from './menu.js';
+import { createTray } from './main/try.js';
+import { createMenu } from './main/menu.js';
 
 app.on('ready', () => {
     const mainWindow = new BrowserWindow({
