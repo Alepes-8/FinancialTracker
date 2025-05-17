@@ -3,12 +3,18 @@ const electron = require('electron');
 //allow the frontend UI to use calls in order to contact the backend.
 //This is in order to creat protection for the UI everything it wants to.
 //avoid giving to many privlages in order to minimise security risks.
-electron.contextBridge.exposeInMainWorld('electron', { 
-    subscribeData: (callback) => {
-        return ipcOn('subscribeData', callback);
-    },
-    getStaticBackendData: () => ipcInvoke('getStaticBackendData'),
-} satisfies Window['electron'])
+export const api = {
+  subscribeStats: (callback) => {
+    return ipcOn('subscribeStats', callback);
+  },
+  getStaticBackendData: () => ipcInvoke('getStaticBackendData'),
+
+  sendCreateExpense: (payload) => {
+        return sendFn('sendCreateExpense', payload);
+  }
+} satisfies Window['electron'];
+
+electron.contextBridge.exposeInMainWorld('electron', api);
 
 //call the backend from the frontend
 function ipcInvoke<Key extends keyof EventPlayLoadMapping>(
@@ -27,7 +33,7 @@ function ipcOn<Key extends keyof EventPlayLoadMapping>(
     return () => electron.ipcRenderer.off(key, cb);
 }
 
-function sendFn<Key extends keyof EventPlayLoadMapping>(
+export function sendFn<Key extends keyof EventPlayLoadMapping>(
   channel: Key,
   payload: EventPlayLoadMapping[Key]
 ) {

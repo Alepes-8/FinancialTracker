@@ -1,6 +1,6 @@
 import osUtils from 'os-utils';
 import { BrowserWindow } from 'electron';
-import { ipcWebContentsSend } from './utils.js';
+import { ipcMainOn, ipcWebContentsSend } from './utils.js';
 
 const SENDING_INTERVAL = 2000;
 
@@ -8,7 +8,7 @@ const SENDING_INTERVAL = 2000;
 export function pullResources(mainWindow: BrowserWindow){
     setInterval(async () => {
         const message = await getBackendMessage();
-        ipcWebContentsSend('subscribeData', mainWindow.webContents, {log: message})
+        ipcWebContentsSend('subscribeStats', mainWindow.webContents, {log: message})
     }, SENDING_INTERVAL)
 }
 
@@ -21,4 +21,10 @@ function getBackendMessage() : Promise<number>{
     return new Promise(resolve => {
         osUtils.cpuUsage(resolve)
     })
+}
+
+export function printPayLoadListner(){
+    ipcMainOn('sendCreateExpense', (payload) => {
+        console.log('Received expense from renderer:', payload.name, payload.value);
+    });
 }

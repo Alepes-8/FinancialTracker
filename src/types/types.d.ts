@@ -1,5 +1,6 @@
-type ViewData = {
-    page: string
+type ExpenseData = {
+    name: string,
+    value: number,
 }
 
 type StaticBackendData = {
@@ -8,15 +9,17 @@ type StaticBackendData = {
 
 //the different events that we are using
 type EventPlayLoadMapping = {
-    subscribeData: subscribeData,
+    subscribeStats: subscribeStats,    
     getStaticBackendData: GetStaticBackendData,
+    sendCreateExpense: ExpenseData,
 }
 
 type UnsubscribeToRepeatedBackendResonseFunction = () => void;
 
 interface Window {
     electron: {
-        subscribeData: (callback: (viewData: ViewData) => void) => UnsubscribeToRepeatedBackendResonseFunction;
+        subscribeStats: (callback: (subscribeStats: SubscribeStats) => void) => UnsubscribeToRepeatedBackendResonseFunction;
         getStaticBackendData: () => Promise<StaticBackendData>;
+        sendCreateExpense: (expenseData: ExpenseData) => void;
     };
 }
