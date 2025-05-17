@@ -5,9 +5,7 @@ const electron = require('electron');
 //avoid giving to many privlages in order to minimise security risks.
 electron.contextBridge.exposeInMainWorld('electron', { 
     subscribeData: (callback) => {
-        return ipcOn('subscribeData', (stats) => {
-            callback(stats);
-        });
+        return ipcOn('subscribeData', callback);
     },
     getStaticBackendData: () => ipcInvoke('getStaticBackendData'),
 } satisfies Window['electron'])
@@ -24,7 +22,7 @@ function ipcOn<Key extends keyof EventPlayLoadMapping>(
     key: Key,
     callback: (payload: EventPlayLoadMapping[Key]) => void
 ) {
-    const cb = (_ : Electron.IpcRendererEvent, payload: any) => callback(payload)
+    const cb = (_ : Electron.IpcRendererEvent, payload: EventPlayLoadMapping[Key]) => callback(payload)
     electron.ipcRenderer.on(key, cb);
     return () => electron.ipcRenderer.off(key, cb);
 }
