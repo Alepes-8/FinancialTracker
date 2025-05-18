@@ -25,6 +25,6 @@ function getBackendMessage() : Promise<number>{
 
 export function printPayLoadListner(){
     ipcMainOn('sendCreateExpense', (payload) => {
-        console.log('Received expense from renderer:', payload.name, payload.value);
+        console.log('Received expense from renderer:', payload.name, payload.value, payload.date);
     });
 }

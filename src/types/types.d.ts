@@ -1,6 +1,7 @@
 type ExpenseData = {
     name: string,
     value: number,
+    date: Date
 }
 
 type StaticBackendData = {
