@@ -1,6 +1,7 @@
 import osUtils from 'os-utils';
 import { BrowserWindow } from 'electron';
 import { ipcMainOn, ipcWebContentsSend } from './utils.js';
+import { getExpenses } from '../../database/dbmanager.js';
 
 const SENDING_INTERVAL = 2000;
 
@@ -26,5 +27,6 @@ function getBackendMessage() : Promise<number>{
 export function printPayLoadListner(){
     ipcMainOn('sendCreateExpense', (payload) => {
         console.log('Received expense from renderer:', payload.name, payload.value, payload.date);
+        console.log('database:', getExpenses());
     });
 }

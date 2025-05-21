@@ -1,7 +1,12 @@
 {
     "appId":"com.apes.financialtracker",
     "files": ["dist-electron", "dist-react"],
-    "extraResources": ["dist-electron/preload.cjs", "src/assets/**"],
+    "extraResources": 
+    [
+        "dist-electron/electron/preload.cjs", 
+        "src/assets/**",
+        "src/electron/databaseSQLite.db"
+    ],
     "icon": "src/assets/image-material/tempDesktopIcon.png",
     "mac": {
         "target": "dmg"

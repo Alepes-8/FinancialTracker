@@ -3,5 +3,6 @@ const db = new Database('./databaseSQLite.db');
 
 export function getExpenses() {
   const stmt = db.prepare('SELECT * FROM EXPENSES');
+  console.log('tests');
   return stmt.all();
 }
