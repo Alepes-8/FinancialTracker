@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import { ipcMainHandle, isDev } from './main/utils.js';
-import { getStaticBackendData, pullResources} from './main/resourceManager.js'
+import { getStaticBackendData, printPayLoadListner, pullResources} from './main/resourceManager.js'
 import { getPreLoadPath, getUIPath } from './pathResolver.js';
 import { createTray } from './main/try.js';
 import { createMenu } from './main/menu.js';
@@ -20,6 +20,8 @@ app.on('ready', () => {
     }
 
     pullResources(mainWindow);
+
+    printPayLoadListner();
     //assyncronase call which instead of always sending things, this one can now handle to ba called from the frontend and return the getStaticBackendData information
     //call await window.electron.getStaticBackendData()
     //to explain this is a listner.This doesn't call it without being called appon

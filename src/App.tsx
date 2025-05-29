@@ -3,15 +3,10 @@ import reactLogo from './assets/react.svg'
 import './App.css'
 
 
+
+
 function App() {
   const [count, setCount] = useState(0)
-
-  /*useEffect(() => {
-    const unsub = window.electron.sendDataToFrontEndListener((response) => console.log(response));
-    return unsub; //if we return unsub, it will close down if we adjust page or unmount it.
-  }, [])
-**/
-
   const [unsub, setUnsub] = useState<(() => void) | null>(null);
 
   const toggleDataListener = () => {
@@ -22,7 +17,7 @@ function App() {
       console.log("Stopped listening to data.");
     } else {
       // Start listening
-      const newUnsub = window.electron.subscribeData((response) => {
+      const newUnsub = window.electron.subscribeStats((response) => {
         console.log("Received:", response);
       });
       setUnsub(() => newUnsub); // store unsub function
@@ -30,6 +25,30 @@ function App() {
     }
   };
 
+    const sendMessageBackend = () => {
+        window.electron.sendCreateExpense({name:'jone doe', value: 10, date: new Date(10-12-2000)});
+  }
+
+  const getTodayDateString = (): string => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const [dob, setDob] = useState(getTodayDateString());
+
+  const collectFormData = () => {
+    const nameInput = document.getElementById('nameInput') as HTMLInputElement;
+    const valueInput = document.getElementById('ageInput') as HTMLInputElement;
+
+    window.electron.sendCreateExpense({
+      name: nameInput.value,
+      value: Number(valueInput.value),
+      date: new Date(dob),
+    });
+  };
 
   return (
     <>
@@ -46,6 +65,21 @@ function App() {
         <button onClick={toggleDataListener}>
           {unsub ? 'Stop Listening' : 'Start Listening'}
         </button>
+         <button onClick={sendMessageBackend}>
+          send message
+        </button>
+        
+        <div className="card">
+          <input type="text" id="nameInput" />
+          <input type="number" id="ageInput" />
+          <input
+            type="date"
+            id="dobInput"
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          />
+          <button onClick={collectFormData}>Submit</button>
+        </div>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

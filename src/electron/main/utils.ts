@@ -48,3 +48,16 @@ export function validateEventFrame(frame: WebFrameMain) {
         throw new Error('Malicious event');
     }
 }
+
+//A backend constant listner for the frontend.
+export function ipcMainOn<Key extends keyof EventPlayLoadMapping>(
+  key: Key,
+  callback: (payload: EventPlayLoadMapping[Key]) => void
+): () => void {
+  const cb = (_event: Electron.IpcMainEvent, payload: EventPlayLoadMapping[Key]) => {
+    callback(payload);
+  };
+
+  ipcMain.on(key, cb);
+  return () => ipcMain.off(key, cb);
+}

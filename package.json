@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "dist-electron/main.js",
+  "main": "dist-electron/electron/main.js",
   "author": {
     "name": "Alex Peschel"
   },
@@ -12,20 +12,23 @@
     "dev:react": "vite",
     "dev:electron": "npm run transpile:electron && cross-env NODE_ENV=development electron .",
     "build": "tsc -b && vite build",
+    "build:db": "node src/database/copy-db.cjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "transpile:electron": "tsc --project src/electron/tsconfig.json",
-    "dist:mac": "npm run transpile:electron && npm run build && electron-builder --mac --arm64",
-    "dist:win": "npm run transpile:electron && npm run build && electron-builder --win --x64",
-    "dist:linux": "npm run transpile:electron && npm run build && electron-builder --linux --x64"
+    "dist:mac": "npm run transpile:electron && npm run build && npm run build:db && electron-builder --mac --arm64",
+    "dist:win": "npm run transpile:electron && npm run build && npm run build:db && electron-builder --win --x64",
+    "dist:linux": "npm run transpile:electron && npm run build && npm run build:db && electron-builder --linux --x64"
   },
   "dependencies": {
+    "better-sqlite3": "^11.10.0",
     "os-utils": "^0.0.14",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/os-utils": "^0.0.4",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
