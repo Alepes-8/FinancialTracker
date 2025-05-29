@@ -29,7 +29,6 @@ function App() {
         window.electron.sendCreateExpense({name:'jone doe', value: 10, date: new Date(10-12-2000)});
   }
 
-
   const getTodayDateString = (): string => {
     const today = new Date();
     const yyyy = today.getFullYear();
