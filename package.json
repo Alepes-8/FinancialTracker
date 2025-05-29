@@ -12,12 +12,13 @@
     "dev:react": "vite",
     "dev:electron": "npm run transpile:electron && cross-env NODE_ENV=development electron .",
     "build": "tsc -b && vite build",
+    "build:db": "node src/database/copy-db.cjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "transpile:electron": "tsc --project src/electron/tsconfig.json",
-    "dist:mac": "npm run transpile:electron && npm run build && electron-builder --mac --arm64",
-    "dist:win": "npm run transpile:electron && npm run build && electron-builder --win --x64",
-    "dist:linux": "npm run transpile:electron && npm run build && electron-builder --linux --x64"
+    "dist:mac": "npm run transpile:electron && npm run build && npm run build:db && electron-builder --mac --arm64",
+    "dist:win": "npm run transpile:electron && npm run build && npm run build:db && electron-builder --win --x64",
+    "dist:linux": "npm run transpile:electron && npm run build && npm run build:db && electron-builder --linux --x64"
   },
   "dependencies": {
     "better-sqlite3": "^11.10.0",

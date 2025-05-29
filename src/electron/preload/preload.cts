@@ -12,6 +12,8 @@ export const api = {
   sendCreateExpense: (payload) => {
         return sendFn('sendCreateExpense', payload);
   }
+
+  
 } satisfies Window['electron'];
 
 electron.contextBridge.exposeInMainWorld('electron', api);
