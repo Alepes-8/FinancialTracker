@@ -33,3 +33,15 @@ export function getExpenses() {
   const stmt = db.prepare('SELECT * FROM EXPENSES');
   return stmt.all();
 }
+
+export function addExpenseEntry(expenseName: string, sumAmount: number) {
+    const stmt = db.prepare(`
+    INSERT INTO EXPENSES (EXPENSE_REASON, SUM)
+    VALUES (@EXPENSE_REASON, @SUM)
+  `);
+
+  stmt.run({
+    EXPENSE_REASON: expenseName, 
+    SUM: sumAmount,
+  });
+}
