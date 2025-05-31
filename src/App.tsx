@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import GraphPage from './frontend/pages/GraphPage';
 import './App.css'
+import CategoryDropdown from './frontend/components/CategoryDropdown';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -50,6 +51,19 @@ function App() {
     });
   };
 
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [categories, setCategories] = useState<string[]>([
+    'Food',
+    'Transport',
+    'Utilities',
+  ]);
+  
+  const addNewCategory = (newCat: string) => {
+    if (!categories.includes(newCat)) {
+      setCategories((prev) => [...prev, newCat]);
+    }
+  };
+
   return (
     <>
       <div>
@@ -72,6 +86,12 @@ function App() {
         <div className="card">
           <input type="text" id="nameInput" />
           <input type="number" id="ageInput" />
+          <CategoryDropdown
+            categories={categories}
+            selected={selectedCategory}
+            onChange={setSelectedCategory}
+            onAddNewCategory={addNewCategory}
+          />
           <input
             type="date"
             id="dobInput"
