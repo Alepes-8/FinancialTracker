@@ -26,8 +26,6 @@ ChartJS.register(
   Legend
 );
 
-
-
 const GraphView = () => {
 
     const [expenses, setExpenses] = useState<ExpenseBackendData[]>([]);
