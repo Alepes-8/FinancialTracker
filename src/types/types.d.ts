@@ -4,14 +4,16 @@ type ExpenseData = {
     date: Date
 }
 
-type StaticBackendData = {
-    sum: number,
-};
+type ExpenseBackendData = {
+    ID: number,
+    SUM: number,
+    EXPENSE_REASON: string
+}
 
 //the different events that we are using
 type EventPlayLoadMapping = {
     subscribeStats: subscribeStats,    
-    getStaticBackendData: GetStaticBackendData,
+    getAllBackendExpenseData: GetStaticBackendData,
     sendCreateExpense: ExpenseData,
 }
 
@@ -20,7 +22,7 @@ type UnsubscribeToRepeatedBackendResonseFunction = () => void;
 interface Window {
     electron: {
         subscribeStats: (callback: (subscribeStats: SubscribeStats) => void) => UnsubscribeToRepeatedBackendResonseFunction;
-        getStaticBackendData: () => Promise<StaticBackendData>;
+        getAllBackendExpenseData: () => Promise<ExpenseBackendData[]>;
         sendCreateExpense: (expenseData: ExpenseData) => void;
     };
 }
