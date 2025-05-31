@@ -13,9 +13,8 @@ export function pullResources(mainWindow: BrowserWindow){
     }, SENDING_INTERVAL)
 }
 
-export function getStaticBackendData() {
-    const totalStorage = 100;
-    return {sum: totalStorage};
+export function getAllBackendExpenseData() {
+    return getExpenses();
 }
 
 function getBackendMessage() : Promise<number>{

@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
+import GraphPage from './frontend/pages/GraphPage';
 import './App.css'
-
-
-
 
 function App() {
   const [count, setCount] = useState(0)
@@ -38,6 +36,8 @@ function App() {
   };
 
   const [dob, setDob] = useState(getTodayDateString());
+
+  const [showGraph, setShowGraph] = useState(false);
 
   const collectFormData = () => {
     const nameInput = document.getElementById('nameInput') as HTMLInputElement;
@@ -87,6 +87,13 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <div className="p-4">
+      <button onClick={() => setShowGraph(prev => !prev)}>
+        {showGraph ? 'Hide Graph' : 'Show Graph'}
+      </button>
+
+      {showGraph && <GraphPage />}
+      </div>
     </>
   )
 }

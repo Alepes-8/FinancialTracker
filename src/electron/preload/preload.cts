@@ -7,7 +7,7 @@ export const api = {
   subscribeStats: (callback) => {
     return ipcOn('subscribeStats', callback);
   },
-  getStaticBackendData: () => ipcInvoke('getStaticBackendData'),
+  getAllBackendExpenseData: () => ipcInvoke('getAllBackendExpenseData'),
 
   sendCreateExpense: (payload) => {
         return sendFn('sendCreateExpense', payload);
