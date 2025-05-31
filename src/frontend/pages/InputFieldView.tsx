@@ -12,6 +12,7 @@ const InputFieldView = () => {
         window.electron.sendCreateExpense({
             name: nameInput.value,
             value: Number(valueInput.value),
+            category: categories,
             date: new Date(dob),
         });
     };

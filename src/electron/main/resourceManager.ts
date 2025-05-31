@@ -19,13 +19,10 @@ export function getAllBackendExpenseData() {
 
 export function getAllCategoriesFromDatabase() {
       const rawData = getCategories() as DatabaseCategoryRow[];
-    console.log("raw" , rawData)
     const transformed: CategoryData[] = rawData.map((row) => ({
         id: row.ID,
         category_name: row.CATEGORY_NAME,
     }));
-    console.log("raw2" , transformed)
-
     return transformed
 }
 
@@ -37,8 +34,9 @@ function getBackendMessage() : Promise<number>{
 
 export function printPayLoadListner(){
     ipcMainOn('sendCreateExpense', (payload) => {
-        console.log('Received expense from renderer:', payload.name, payload.value, payload.date);
-        addExpenseEntry(payload.name, payload.value);
+        console.log('Received expense from renderer:', payload.name, payload.value, payload.category, payload.date);
+        addExpenseEntry(payload.name, payload.value, payload.category);
         console.log('database:', getExpenses());
+        console.log('database:', getCategories());
     });
 }

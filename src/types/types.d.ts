@@ -1,6 +1,7 @@
 type ExpenseData = {
     name: string,
     value: number,
+    category: CategoryData[],
     date: Date
 }
 
