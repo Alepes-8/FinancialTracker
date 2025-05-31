@@ -1,5 +1,3 @@
-// src/pages/GraphPage.tsx
-
 import React, { useState } from 'react';
 import { Bar, Doughnut, Line} from 'react-chartjs-2';
 import {
@@ -28,19 +26,15 @@ ChartJS.register(
   Legend
 );
 
-type ExpenseType = {
-    ID: number;
-    SUM: number;
-    EXPENSE_REASON: string | null;
-}
 
-const GraphPage = () => {
 
-    const [expenses, setExpenses] = useState<ExpenseType[]>([]);
+const GraphView = () => {
+
+    const [expenses, setExpenses] = useState<ExpenseBackendData[]>([]);
 
     const getData = async () => {
         try {
-        const data: ExpenseType[] = await window.electron.getAllBackendExpenseData();
+        const data: ExpenseBackendData[] = await window.electron.getAllBackendExpenseData();
         setExpenses(data);
         } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -122,4 +116,4 @@ const GraphPage = () => {
     );
 };
 
-export default GraphPage;
+export default GraphView;

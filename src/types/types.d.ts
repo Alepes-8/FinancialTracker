@@ -5,9 +5,9 @@ type ExpenseData = {
 }
 
 type ExpenseBackendData = {
-    id: number,
-    sum: number,
-    reason: string
+    ID: number,
+    SUM: number,
+    EXPENSE_REASON: string
 }
 
 //the different events that we are using
@@ -22,7 +22,7 @@ type UnsubscribeToRepeatedBackendResonseFunction = () => void;
 interface Window {
     electron: {
         subscribeStats: (callback: (subscribeStats: SubscribeStats) => void) => UnsubscribeToRepeatedBackendResonseFunction;
-        getAllBackendExpenseData: () => Promise<ExpenseBackendData>;
+        getAllBackendExpenseData: () => Promise<ExpenseBackendData[]>;
         sendCreateExpense: (expenseData: ExpenseData) => void;
     };
 }
