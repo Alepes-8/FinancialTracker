@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 
 type Props = {
-  categories: string[];
-  selected: string;
-  onChange: (value: string) => void;
-  onAddNewCategory: (newCategory: string) => void;
+  categories: CategoryData[];
+  selected: CategoryData | null;
+  onChange: (value: CategoryData | null) => void;
+  onAddNewCategory: (newCategory: CategoryData) => void;
 };
-
 const CategoryDropdown: React.FC<Props> = ({
   categories,
   selected,
@@ -19,17 +18,22 @@ const CategoryDropdown: React.FC<Props> = ({
   const handleSelectChange = (value: string) => {
     if (value === '__new__') {
       setShowNewInput(true);
-      onChange(''); // Clear selection while typing
+      onChange(null);
     } else {
+      const selectedCat = categories.find((cat) => cat.id.toString() === value) || null;
       setShowNewInput(false);
-      onChange(value);
+      onChange(selectedCat);
     }
   };
 
   const handleAddCategory = () => {
     if (newCategory.trim()) {
-      onAddNewCategory(newCategory.trim());
-      onChange(newCategory.trim());
+      const newCat: CategoryData = {
+        id: Math.max(0, ...categories.map((c) => c.id)) + 1, // Temporary ID
+        category_name: newCategory.trim(),
+      };
+      onAddNewCategory(newCat);
+      onChange(newCat);
       setNewCategory('');
       setShowNewInput(false);
     }
@@ -40,13 +44,13 @@ const CategoryDropdown: React.FC<Props> = ({
       <label htmlFor="category-select">Category:</label>
       <select
         id="category-select"
-        value={selected}
+        value={selected?.id ?? ''}
         onChange={(e) => handleSelectChange(e.target.value)}
       >
         <option value="">-- Select a category --</option>
         {categories.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
+          <option key={cat.id} value={cat.id}>
+            {cat.category_name}
           </option>
         ))}
         <option value="__new__">+ Create New</option>

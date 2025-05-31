@@ -34,14 +34,69 @@ export function getExpenses() {
   return stmt.all();
 }
 
-export function addExpenseEntry(expenseName: string, sumAmount: number) {
-    const stmt = db.prepare(`
+export function getCategories() {
+  const stmt = db.prepare('SELECT * FROM CATEGORIES');
+  return stmt.all();
+}
+
+export function getCategorieConnections() {
+  const stmt = db.prepare('SELECT * FROM EXPENSE_CATEGORIES');
+  return stmt.all();
+}
+
+export function addExpenseEntry(
+  expenseName: string,
+  sumAmount: number,
+  categories: CategoryData | null,
+) {
+  // Start transaction (depends on your SQLite library)
+  const insertExpenseStmt = db.prepare(`
     INSERT INTO EXPENSES (EXPENSE_REASON, SUM)
     VALUES (@EXPENSE_REASON, @SUM)
   `);
 
-  stmt.run({
-    EXPENSE_REASON: expenseName, 
+  const getCategoryByIdStmt = db.prepare(`
+    SELECT * FROM CATEGORIES WHERE ID = ?
+  `);
+
+  const insertCategoryStmt = db.prepare(`
+    INSERT INTO CATEGORIES (CATEGORY_NAME)
+    VALUES (?)
+  `);
+
+  const insertExpenseCategoryStmt = db.prepare(`
+    INSERT INTO EXPENSE_CATEGORIES (EXPENSE_ID, CATEGORY_ID)
+    VALUES (?, ?)
+  `);
+
+  const expenseResult = insertExpenseStmt.run({
+    EXPENSE_REASON: expenseName,
     SUM: sumAmount,
   });
+
+  const expenseId = expenseResult.lastInsertRowid;
+
+  // For each category, check if it exists by ID. If no ID, insert it.
+  if (categories !== null) {
+    let categoryId = categories.id;
+
+    if (!categoryId) {
+      // Insert new category, get new id
+      const categoryResult = insertCategoryStmt.run(categories.category_name);
+      categoryId = Number(categoryResult.lastInsertRowid);
+    } else {
+      // Optional: verify category exists by ID
+      const existing = getCategoryByIdStmt.get(categoryId);
+      if (!existing) {
+        // If category id given but not found, insert new category instead
+        const categoryResult = insertCategoryStmt.run(categories.category_name);
+        categoryId = Number(categoryResult.lastInsertRowid);
+      }
+    }
+
+    // Link expense to category
+    insertExpenseCategoryStmt.run(expenseId, categoryId);
+  }
+  
 }
+

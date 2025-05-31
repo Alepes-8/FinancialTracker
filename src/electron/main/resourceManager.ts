@@ -1,7 +1,7 @@
 import osUtils from 'os-utils';
 import { BrowserWindow } from 'electron';
 import { ipcMainOn, ipcWebContentsSend } from './utils.js';
-import { getExpenses, addExpenseEntry} from '../../database/dbmanager.js';
+import { getExpenses, addExpenseEntry, getCategories, getCategorieConnections} from '../../database/dbmanager.js';
 
 const SENDING_INTERVAL = 2000;
 
@@ -17,6 +17,15 @@ export function getAllBackendExpenseData() {
     return getExpenses();
 }
 
+export function getAllCategoriesFromDatabase() {
+      const rawData = getCategories() as DatabaseCategoryRow[];
+    const transformed: CategoryData[] = rawData.map((row) => ({
+        id: row.ID,
+        category_name: row.CATEGORY_NAME,
+    }));
+    return transformed
+}
+
 function getBackendMessage() : Promise<number>{
     return new Promise(resolve => {
         osUtils.cpuUsage(resolve)
@@ -25,8 +34,10 @@ function getBackendMessage() : Promise<number>{
 
 export function printPayLoadListner(){
     ipcMainOn('sendCreateExpense', (payload) => {
-        console.log('Received expense from renderer:', payload.name, payload.value, payload.date);
-        addExpenseEntry(payload.name, payload.value);
+        console.log('Received expense from renderer:', payload.name, payload.value, payload.category, payload.date);
+        addExpenseEntry(payload.name, payload.value, payload.category);
         console.log('database:', getExpenses());
+        console.log('database:', getCategories());
+        console.log('database:', getCategorieConnections());
     });
 }
