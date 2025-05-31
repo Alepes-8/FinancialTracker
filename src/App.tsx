@@ -7,12 +7,12 @@ import GraphView from './frontend/pages/GraphsView';
 function App() {
 
   const sendMessageBackend = () => {
-    window.electron.sendCreateExpense({name:'jone doe', value: 10, category:  [
+    window.electron.sendCreateExpense({name:'jone doe', value: 10, category:  
     { 
         id: 76,
         category_name: "test",
     }
-    ] , date: new Date(10-12-2000)});
+    , date: new Date(10-12-2000)});
   }
 
   const [showGraph, setShowGraph] = useState(false);

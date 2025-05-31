@@ -8,26 +8,22 @@ const InputFieldView = () => {
     const collectFormData = () => {
         const nameInput = document.getElementById('nameInput') as HTMLInputElement;
         const valueInput = document.getElementById('ageInput') as HTMLInputElement;
-
+        
         window.electron.sendCreateExpense({
             name: nameInput.value,
             value: Number(valueInput.value),
-            category: categories,
+            category: selectedCategory, 
             date: new Date(dob),
         });
     };
 
-    const addNewCategory = (newCat: string) => {
-        if (!categories.some(cat => cat.category_name === newCat)) {
-            const newCategory: CategoryData = {
-            id: Date.now(), // Temp ID for frontend purposes
-            category_name: newCat,
-            };
-            setCategories(prev => [...prev, newCategory]);
+    const addNewCategory = (newCat: CategoryData) => {
+        if (!categories.find((c) => c.id === newCat.id)) {
+            setCategories((prev) => [...prev, newCat]);
         }
     };
 
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState<CategoryData | null>(null);
     const [categories, setCategories] = useState<CategoryData[]>([]);
 
     const [dob, setDob] = useState(getTodayDateString());

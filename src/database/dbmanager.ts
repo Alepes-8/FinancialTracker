@@ -39,10 +39,15 @@ export function getCategories() {
   return stmt.all();
 }
 
+export function getCategorieConnections() {
+  const stmt = db.prepare('SELECT * FROM EXPENSE_CATEGORIES');
+  return stmt.all();
+}
+
 export function addExpenseEntry(
   expenseName: string,
   sumAmount: number,
-  categories: CategoryData[],
+  categories: CategoryData | null,
 ) {
   // Start transaction (depends on your SQLite library)
   const insertExpenseStmt = db.prepare(`
@@ -72,25 +77,26 @@ export function addExpenseEntry(
   const expenseId = expenseResult.lastInsertRowid;
 
   // For each category, check if it exists by ID. If no ID, insert it.
-  categories.forEach((cat) => {
-    let categoryId = cat.id;
+  if (categories !== null) {
+    let categoryId = categories.id;
 
     if (!categoryId) {
       // Insert new category, get new id
-      const categoryResult = insertCategoryStmt.run(cat.category_name);
+      const categoryResult = insertCategoryStmt.run(categories.category_name);
       categoryId = Number(categoryResult.lastInsertRowid);
     } else {
       // Optional: verify category exists by ID
       const existing = getCategoryByIdStmt.get(categoryId);
       if (!existing) {
         // If category id given but not found, insert new category instead
-        const categoryResult = insertCategoryStmt.run(cat.category_name);
+        const categoryResult = insertCategoryStmt.run(categories.category_name);
         categoryId = Number(categoryResult.lastInsertRowid);
       }
     }
 
     // Link expense to category
     insertExpenseCategoryStmt.run(expenseId, categoryId);
-  });
+  }
+  
 }
 

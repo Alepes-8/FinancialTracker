@@ -1,7 +1,7 @@
 import osUtils from 'os-utils';
 import { BrowserWindow } from 'electron';
 import { ipcMainOn, ipcWebContentsSend } from './utils.js';
-import { getExpenses, addExpenseEntry, getCategories} from '../../database/dbmanager.js';
+import { getExpenses, addExpenseEntry, getCategories, getCategorieConnections} from '../../database/dbmanager.js';
 
 const SENDING_INTERVAL = 2000;
 
@@ -38,5 +38,6 @@ export function printPayLoadListner(){
         addExpenseEntry(payload.name, payload.value, payload.category);
         console.log('database:', getExpenses());
         console.log('database:', getCategories());
+        console.log('database:', getCategorieConnections());
     });
 }
