@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 type Props = {
-  categories: string[];
+  categories: CategoryData[];
   selected: string;
   onChange: (value: string) => void;
   onAddNewCategory: (newCategory: string) => void;
@@ -19,7 +19,7 @@ const CategoryDropdown: React.FC<Props> = ({
   const handleSelectChange = (value: string) => {
     if (value === '__new__') {
       setShowNewInput(true);
-      onChange(''); // Clear selection while typing
+      onChange('');
     } else {
       setShowNewInput(false);
       onChange(value);
@@ -45,8 +45,8 @@ const CategoryDropdown: React.FC<Props> = ({
       >
         <option value="">-- Select a category --</option>
         {categories.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
+          <option key={cat.id} value={cat.category_name}>
+            {cat.category_name}
           </option>
         ))}
         <option value="__new__">+ Create New</option>

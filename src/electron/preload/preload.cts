@@ -8,6 +8,7 @@ export const api = {
     return ipcOn('subscribeStats', callback);
   },
   getAllBackendExpenseData: () => ipcInvoke('getAllBackendExpenseData'),
+  getAllCategories: () => ipcInvoke('getAllCategories'),
 
   sendCreateExpense: (payload) => {
         return sendFn('sendCreateExpense', payload);

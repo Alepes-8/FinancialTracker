@@ -1,7 +1,7 @@
 import osUtils from 'os-utils';
 import { BrowserWindow } from 'electron';
 import { ipcMainOn, ipcWebContentsSend } from './utils.js';
-import { getExpenses, addExpenseEntry} from '../../database/dbmanager.js';
+import { getExpenses, addExpenseEntry, getCategories} from '../../database/dbmanager.js';
 
 const SENDING_INTERVAL = 2000;
 
@@ -15,6 +15,18 @@ export function pullResources(mainWindow: BrowserWindow){
 
 export function getAllBackendExpenseData() {
     return getExpenses();
+}
+
+export function getAllCategoriesFromDatabase() {
+      const rawData = getCategories() as DatabaseCategoryRow[];
+    console.log("raw" , rawData)
+    const transformed: CategoryData[] = rawData.map((row) => ({
+        id: row.ID,
+        category_name: row.CATEGORY_NAME,
+    }));
+    console.log("raw2" , transformed)
+
+    return transformed
 }
 
 function getBackendMessage() : Promise<number>{

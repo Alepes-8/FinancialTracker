@@ -1,9 +1,10 @@
 import { app, BrowserWindow } from 'electron';
-import { ipcMainHandle, isDev } from './main/utils.js';
-import { getAllBackendExpenseData, printPayLoadListner, pullResources} from './main/resourceManager.js'
+import { isDev } from './main/utils.js';
+import { printPayLoadListner, pullResources} from './main/resourceManager.js'
 import { getPreLoadPath, getUIPath } from './pathResolver.js';
 import { createTray } from './main/try.js';
 import { createMenu } from './main/menu.js';
+import { createHandlers } from './handlers.js';
 
 app.on('ready', () => {
     const mainWindow = new BrowserWindow({
@@ -19,22 +20,18 @@ app.on('ready', () => {
         mainWindow.loadFile(getUIPath());
     }
 
-
     //TODO will not be neded
     pullResources(mainWindow);
 
     printPayLoadListner();
 
-    ipcMainHandle("getAllBackendExpenseData", () => {
-        return getAllBackendExpenseData();
-    });
+    createHandlers();
 
     //Sets the program image.
     createTray(mainWindow);
     handleCloseEvent(mainWindow);
     createMenu(mainWindow);
 });
-
 
 function handleCloseEvent(mainWindow: BrowserWindow){
     let willClose = false;

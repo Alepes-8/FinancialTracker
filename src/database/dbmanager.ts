@@ -34,6 +34,11 @@ export function getExpenses() {
   return stmt.all();
 }
 
+export function getCategories() {
+  const stmt = db.prepare('SELECT * FROM CATEGORIES');
+  return stmt.all();
+}
+
 export function addExpenseEntry(expenseName: string, sumAmount: number) {
     const stmt = db.prepare(`
     INSERT INTO EXPENSES (EXPENSE_REASON, SUM)

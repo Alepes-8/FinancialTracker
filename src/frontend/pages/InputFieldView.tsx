@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CategoryDropdown from '../components/CategoryDropdown';
 import { getTodayDateString } from '@/frontend/utils/dateUtils';
 
@@ -17,19 +17,33 @@ const InputFieldView = () => {
     };
 
     const addNewCategory = (newCat: string) => {
-        if (!categories.includes(newCat)) {
-            setCategories((prev) => [...prev, newCat]);
+        if (!categories.some(cat => cat.category_name === newCat)) {
+            const newCategory: CategoryData = {
+            id: Date.now(), // Temp ID for frontend purposes
+            category_name: newCat,
+            };
+            setCategories(prev => [...prev, newCategory]);
         }
     };
 
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [categories, setCategories] = useState<string[]>([
-        'Food',
-        'Transport',
-        'Utilities',
-    ]);
+    const [categories, setCategories] = useState<CategoryData[]>([]);
 
     const [dob, setDob] = useState(getTodayDateString());
+
+    useEffect(() => {
+        async function fetchCategories() {
+            try {
+                const data: CategoryData[] = await window.electron.getAllCategories();
+                console.log('test' , data);
+                setCategories(data);           
+            } catch (error) {
+                console.error('Failed to fetch data:', error);
+            }
+        }
+
+        fetchCategories();
+    }, []);
 
     return (
         <div className="card">
