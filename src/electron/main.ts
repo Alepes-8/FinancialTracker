@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import { isDev } from './main/utils.js';
-import { printPayLoadListner, pullResources} from './main/resourceManager.js'
+import { createPayLoadListner, pullResources} from './main/resourceManager.js'
 import { getPreLoadPath, getUIPath } from './pathResolver.js';
 import { createTray } from './main/try.js';
 import { createMenu } from './main/menu.js';
@@ -23,7 +23,7 @@ app.on('ready', () => {
     //TODO will not be neded
     pullResources(mainWindow);
 
-    printPayLoadListner();
+    createPayLoadListner();
 
     createHandlers();
 

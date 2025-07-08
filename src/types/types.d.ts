@@ -22,6 +22,7 @@ type EventPlayLoadMapping = {
     getAllBackendExpenseData: GetStaticBackendData,
     getAllCategories: GetAllCategories,
     sendCreateExpense: ExpenseData,
+    sendDeleteExpense: number,
 }
 
 type UnsubscribeToRepeatedBackendResonseFunction = () => void;
@@ -32,5 +33,6 @@ interface Window {
         getAllBackendExpenseData: () => Promise<ExpenseBackendData[]>;
         getAllCategories: () => Promise<CategoryData[]>;
         sendCreateExpense: (expenseData: ExpenseData) => void;
+        sendDeleteExpense: (expenseId: number) => void;
     };
 }
