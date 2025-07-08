@@ -13,6 +13,9 @@ export const api = {
   sendCreateExpense: (payload) => {
     return sendFn('sendCreateExpense', payload);
   },
+  sendUpdateExpense: (payload) => {
+    return sendFn('sendUpdateExpense', payload);
+  },
   sendDeleteExpense: (payload) => {
     return sendFn('sendDeleteExpense', payload);
   }

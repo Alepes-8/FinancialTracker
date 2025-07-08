@@ -1,7 +1,7 @@
 import osUtils from 'os-utils';
 import { BrowserWindow } from 'electron';
 import { ipcMainOn, ipcWebContentsSend } from './utils.js';
-import { getExpenses, addExpenseEntry, getCategories, deleteExpense} from '../../database/dbmanager.js';
+import { getExpenses, addExpenseEntry, getCategories, deleteExpense, updateExpense} from '../../database/dbmanager.js';
 
 const SENDING_INTERVAL = 2000;
 
@@ -37,8 +37,11 @@ export function createPayLoadListner(){
         addExpenseEntry(payload.name, payload.value, payload.category);
     });
 
+    ipcMainOn('sendUpdateExpense', (payLoad) => {
+        updateExpense(payLoad);
+    });
+
     ipcMainOn('sendDeleteExpense', (expenseId) => {
-        console.log('hejsann - ' , expenseId);
         deleteExpense(expenseId);
     });
 }

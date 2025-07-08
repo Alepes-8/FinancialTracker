@@ -22,7 +22,7 @@ type EventPlayLoadMapping = {
     getAllBackendExpenseData: GetStaticBackendData,
     getAllCategories: GetAllCategories,
     sendCreateExpense: ExpenseData,
-    sendCreateExpense: ExpenseBackendData,
+    sendUpdateExpense: ExpenseBackendData,
     sendDeleteExpense: number,
 }
 

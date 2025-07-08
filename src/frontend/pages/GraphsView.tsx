@@ -60,19 +60,24 @@ const GraphView = () => {
 
     const saveExpenseUpdate = async () => {
         try{
-           
-            setExpenses((prev) => 
+            if(editingId != null){
+                await window.electron.sendUpdateExpense({
+                    ID: editingId, 
+                    SUM: editedSum,
+                    EXPENSE_REASON: editedReason
+                });
+                setExpenses((prev) => 
                 prev.map((e) => 
                     e.ID == editingId ? 
                         { ...e, EXPENSE_REASON: editedReason, SUM: editedSum } 
                         : e
                 )
-            ); // update UI
-            setEditingId(null);
+                ); // update UI
+                setEditingId(null);
+            }
         }catch (error) {
             console.error('Updating data failed:', error);
-        }
-        
+        };
     };
 
     return (
