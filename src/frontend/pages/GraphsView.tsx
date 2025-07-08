@@ -48,8 +48,31 @@ const GraphView = () => {
         }
     };
 
-    const updateExpense = async (id: number) => {
-        console.error('updateExpensesssss - ' , id);
+    const [editingId, setEditingId] = useState<number | null>(null);
+    const [editedReason, setEditedReason] = useState<string>('');
+    const [editedSum, setEditedSum] = useState<number>(0);
+
+    const startExpenseEditing = (expense: ExpenseBackendData) => {
+        setEditingId(expense.ID);
+        setEditedReason(expense.EXPENSE_REASON || '');
+        setEditedSum(expense.SUM);
+    };
+
+    const saveExpenseUpdate = async () => {
+        try{
+           
+            setExpenses((prev) => 
+                prev.map((e) => 
+                    e.ID == editingId ? 
+                        { ...e, EXPENSE_REASON: editedReason, SUM: editedSum } 
+                        : e
+                )
+            ); // update UI
+            setEditingId(null);
+        }catch (error) {
+            console.error('Updating data failed:', error);
+        }
+        
     };
 
     return (
@@ -58,9 +81,29 @@ const GraphView = () => {
             <ul>
                 {expenses.map((exp) => (
                 <li key={exp.ID}>
-                    {exp.EXPENSE_REASON || 'No reason'} — ${exp.SUM}
-                    <button onClick={() => deleteData(exp.ID)}> Delete </button>
-                    <button onClick={() => updateExpense(exp.ID)}> Update </button>
+                    {editingId == exp.ID ? 
+                    (   
+                        <>
+                        <input
+                            value = {editedReason}
+                            onChange={(e) => setEditedReason(e.target.value)}
+                        />
+                        <input
+                            typeof='number'
+                            value = {editedSum}
+                            onChange={(e) => setEditedSum(Number(e.target.value))}
+                        />
+                        <button onClick={() => deleteData(exp.ID)}> Delete </button>
+                        <button onClick={() => saveExpenseUpdate()}> Save </button>
+                        <button onClick={() => setEditingId(null)}> Cancel </button>
+                       </> 
+                    ) : (
+                        <>
+                        {exp.EXPENSE_REASON || 'No reason'} — ${exp.SUM}
+                        <button onClick={() => deleteData(exp.ID)}> Delete </button>
+                        <button onClick={() => startExpenseEditing(exp)}> Update </button>
+                        </>
+                    )};
                 </li>
                 ))}
             </ul>

@@ -22,6 +22,7 @@ type EventPlayLoadMapping = {
     getAllBackendExpenseData: GetStaticBackendData,
     getAllCategories: GetAllCategories,
     sendCreateExpense: ExpenseData,
+    sendCreateExpense: ExpenseBackendData,
     sendDeleteExpense: number,
 }
 
@@ -33,6 +34,7 @@ interface Window {
         getAllBackendExpenseData: () => Promise<ExpenseBackendData[]>;
         getAllCategories: () => Promise<CategoryData[]>;
         sendCreateExpense: (expenseData: ExpenseData) => void;
+        sendUpdateExpense: (expenseData: ExpenseBackendData) => void;
         sendDeleteExpense: (expenseId: number) => void;
     };
 }
