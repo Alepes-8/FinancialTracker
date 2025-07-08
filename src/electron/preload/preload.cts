@@ -11,8 +11,12 @@ export const api = {
   getAllCategories: () => ipcInvoke('getAllCategories'),
 
   sendCreateExpense: (payload) => {
-        return sendFn('sendCreateExpense', payload);
+    return sendFn('sendCreateExpense', payload);
+  },
+  sendDeleteExpense: (payload) => {
+    return sendFn('sendDeleteExpense', payload);
   }
+
 } satisfies Window['electron'];
 
 electron.contextBridge.exposeInMainWorld('electron', api);

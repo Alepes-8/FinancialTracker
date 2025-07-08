@@ -1,7 +1,7 @@
 import osUtils from 'os-utils';
 import { BrowserWindow } from 'electron';
 import { ipcMainOn, ipcWebContentsSend } from './utils.js';
-import { getExpenses, addExpenseEntry, getCategories, getCategorieConnections} from '../../database/dbmanager.js';
+import { getExpenses, addExpenseEntry, getCategories, deleteExpense} from '../../database/dbmanager.js';
 
 const SENDING_INTERVAL = 2000;
 
@@ -18,7 +18,7 @@ export function getAllBackendExpenseData() {
 }
 
 export function getAllCategoriesFromDatabase() {
-      const rawData = getCategories() as DatabaseCategoryRow[];
+    const rawData = getCategories() as DatabaseCategoryRow[];
     const transformed: CategoryData[] = rawData.map((row) => ({
         id: row.ID,
         category_name: row.CATEGORY_NAME,
@@ -32,12 +32,13 @@ function getBackendMessage() : Promise<number>{
     })
 }
 
-export function printPayLoadListner(){
+export function createPayLoadListner(){
     ipcMainOn('sendCreateExpense', (payload) => {
-        console.log('Received expense from renderer:', payload.name, payload.value, payload.category, payload.date);
         addExpenseEntry(payload.name, payload.value, payload.category);
-        console.log('database:', getExpenses());
-        console.log('database:', getCategories());
-        console.log('database:', getCategorieConnections());
+    });
+
+    ipcMainOn('sendDeleteExpense', (expenseId) => {
+        console.log('hejsann - ' , expenseId);
+        deleteExpense(expenseId);
     });
 }

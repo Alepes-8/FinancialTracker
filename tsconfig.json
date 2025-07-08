@@ -21,6 +21,6 @@
     "noEmit": true,
     "jsx": "react-jsx" // or "react-native"
   },
-  "include": ["src"],
+  "include": ["src", "copy-db.js"],
   "exclude": ["src/electron"]
 }

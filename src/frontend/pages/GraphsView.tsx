@@ -39,6 +39,15 @@ const GraphView = () => {
         }
     };
 
+    const deleteData = async (id: number) => {
+        try{
+            await window.electron.sendDeleteExpense(id)
+            setExpenses((prev) => prev.filter((e) => e.ID !== id)); // update UI
+        } catch (error) {
+            console.error('Deleting data failed:', error);
+        }
+    };
+
     return (
         <div>
             <button onClick={getData}>Load Expenses</button>
@@ -46,6 +55,7 @@ const GraphView = () => {
                 {expenses.map((exp) => (
                 <li key={exp.ID}>
                     {exp.EXPENSE_REASON || 'No reason'} — ${exp.SUM}
+                    <button onClick={() => deleteData(exp.ID)}> Delete </button>
                 </li>
                 ))}
             </ul>

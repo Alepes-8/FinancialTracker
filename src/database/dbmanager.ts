@@ -44,6 +44,14 @@ export function getCategorieConnections() {
   return stmt.all();
 }
 
+export function deleteExpense(
+  expenseId: number
+) {
+  console.log('information - ' , expenseId);
+  const stmt = db.prepare('DELETE FROM EXPENSES WHERE ID = ?');
+  return stmt.run(expenseId);
+}
+
 export function addExpenseEntry(
   expenseName: string,
   sumAmount: number,
