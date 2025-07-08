@@ -48,6 +48,10 @@ const GraphView = () => {
         }
     };
 
+    const updateExpense = async (id: number) => {
+        console.error('updateExpensesssss - ' , id);
+    };
+
     return (
         <div>
             <button onClick={getData}>Load Expenses</button>
@@ -56,6 +60,7 @@ const GraphView = () => {
                 <li key={exp.ID}>
                     {exp.EXPENSE_REASON || 'No reason'} — ${exp.SUM}
                     <button onClick={() => deleteData(exp.ID)}> Delete </button>
+                    <button onClick={() => updateExpense(exp.ID)}> Update </button>
                 </li>
                 ))}
             </ul>
