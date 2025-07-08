@@ -44,6 +44,20 @@ export function getCategorieConnections() {
   return stmt.all();
 }
 
+export function updateExpense(
+    expenseData: ExpenseBackendData | null,
+    ) {
+    const updateExpense = db.prepare(
+        'UPDATE EXPENSES SET SUM = @SUM, EXPENSE_REASON = @EXPENSE_REASON WHERE ID = @ID'
+    );
+
+    return updateExpense.run({
+        ID: expenseData?.ID,
+        SUM: expenseData?.SUM,
+        EXPENSE_REASON: expenseData?.EXPENSE_REASON,
+    });
+}
+
 export function deleteExpense(
   expenseId: number
 ) {
