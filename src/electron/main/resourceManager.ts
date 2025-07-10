@@ -1,7 +1,7 @@
 import osUtils from 'os-utils';
 import { BrowserWindow } from 'electron';
 import { ipcMainOn, ipcWebContentsSend } from './utils.js';
-import { getExpenses, addExpenseEntry, getCategories, deleteExpense, updateExpense} from '../../database/dbmanager.js';
+import { getExpenses, addExpenseEntry, getCategories, deleteExpense, updateExpense, updateCategory, deleteCategory} from '../../database/dbmanager.js';
 
 const SENDING_INTERVAL = 2000;
 
@@ -43,5 +43,15 @@ export function createPayLoadListner(){
 
     ipcMainOn('sendDeleteExpense', (expenseId) => {
         deleteExpense(expenseId);
+        //TODO verify that the delete function deletetes from the expense:categories as well as the expense, otherwise we have laying null pointers.
+    });
+
+    ipcMainOn('sendUpdateCategory', (payLoad) => {
+        updateCategory(payLoad);
+    });
+
+    ipcMainOn('sendDeleteCatagory', (expenseId) => {
+        deleteCategory(expenseId);
+        //TODO verify that the delete function deletetes from the expense:categories as well as the expense, otherwise we have laying null pointers.
     });
 }

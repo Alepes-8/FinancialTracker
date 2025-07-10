@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 const CategorieComponent = () => {
 
     const [categories, setCategories] = useState<CategoryData[]>([]);
-    const [editingId, SetEditingId] = useState<number | null>(null);
-    const [editedCategories, setEtiedCategories] = useState<string>('');
+    const [editId, setEditId] = useState<number | null>(null);
+    const [editCategoryName, setEditCategoryName] = useState<string>('');
 
     const getData = async () => {
        try {
@@ -18,6 +18,7 @@ const CategorieComponent = () => {
 
     const deleteData = async (categoryID: number) => {
         try {
+            await window.electron.sendDeleteCatagory(categoryID);
             setCategories((prev) => prev.filter((e) => e.ID !== categoryID))
         } catch (error) {
             console.error('Error deleting category ' , error);
@@ -26,21 +27,27 @@ const CategorieComponent = () => {
 
     const saveCompanyUpdate = async () => {
         try {
+            if(editId !== null){
+            await window.electron.sendUpdateCategory({
+                ID: editId,
+                CATEGORY_NAME: editCategoryName
+            });
             setCategories((prev) => 
-                prev.map((e) => e.ID == editingId 
-                    ? {...e, CATEGORY_NAME: editedCategories} 
+                prev.map((e) => e.ID == editId 
+                    ? {...e, CATEGORY_NAME: editCategoryName} 
                     : e
                 )
             );
-            SetEditingId(null);
+            setEditId(null);
+            }            
         } catch (error) {
             console.error('Error updaing category ' , error);
         }
     }
 
     const startCaterogyEditing = async (data: CategoryData) => {
-        SetEditingId(data.ID);
-        setEtiedCategories(data.CATEGORY_NAME);
+        setEditId(data.ID);
+        setEditCategoryName(data.CATEGORY_NAME);
     }
 
     return (
@@ -50,16 +57,16 @@ const CategorieComponent = () => {
                 {categories.map((exp) => (
                 <li key={exp.ID}>
 
-                    {editingId == exp.ID ? 
+                    {editId == exp.ID ? 
                     (   
                         <>
                         <input
-                            value = {editedCategories}
-                            onChange={(e) => setEtiedCategories(e.target.value)}
+                            value = {editCategoryName}
+                            onChange={(e) => setEditCategoryName(e.target.value)}
                         />
                         <button onClick={() => deleteData(exp.ID)}> Delete </button>
                         <button onClick={() => saveCompanyUpdate()}> Save </button>
-                        <button onClick={() => SetEditingId(null)}> Cancel </button>
+                        <button onClick={() => setEditId(null)}> Cancel </button>
                        </> 
                     ) : (
                         <>
