@@ -12,8 +12,8 @@ type ExpenseBackendData = {
 }
 
 type CategoryData = {
-    id: number,
-    category_name: string,
+    ID: number,
+    CATEGORY_NAME: string,
 }
 
 //the different events that we are using

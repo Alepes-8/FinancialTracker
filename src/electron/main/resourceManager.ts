@@ -20,8 +20,8 @@ export function getAllBackendExpenseData() {
 export function getAllCategoriesFromDatabase() {
     const rawData = getCategories() as DatabaseCategoryRow[];
     const transformed: CategoryData[] = rawData.map((row) => ({
-        id: row.ID,
-        category_name: row.CATEGORY_NAME,
+        ID: row.ID,
+        CATEGORY_NAME: row.CATEGORY_NAME,
     }));
     return transformed
 }

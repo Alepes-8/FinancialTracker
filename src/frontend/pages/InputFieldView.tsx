@@ -18,7 +18,7 @@ const InputFieldView = () => {
     };
 
     const addNewCategory = (newCat: CategoryData) => {
-        if (!categories.find((c) => c.id === newCat.id)) {
+        if (!categories.find((c) => c.ID === newCat.ID)) {
             setCategories((prev) => [...prev, newCat]);
         }
     };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import ExpenseComponent from '../components/ExpenseComponent';
-import GraphComponent from '../components/GraphComponent';
+import ExpenseComponent from '../../components/graphs/ExpenseComponent';
+import GraphComponent from '../../components/graphs/GraphComponent';
+import CategorieComponent from '@/frontend/components/graphs/CategorieComponent';
 
 const GraphView: React.FC = () => {
 
@@ -10,6 +11,7 @@ const GraphView: React.FC = () => {
         <div>
 
             <ExpenseComponent expenses={expenses} setExpenses={setExpenses} />
+            <CategorieComponent />
             <GraphComponent expenses={expenses} />
 
         </div>

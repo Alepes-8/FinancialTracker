@@ -100,18 +100,18 @@ export function addExpenseEntry(
 
   // For each category, check if it exists by ID. If no ID, insert it.
   if (categories !== null) {
-    let categoryId = categories.id;
+    let categoryId = categories.ID;
 
     if (!categoryId) {
       // Insert new category, get new id
-      const categoryResult = insertCategoryStmt.run(categories.category_name);
+      const categoryResult = insertCategoryStmt.run(categories.CATEGORY_NAME);
       categoryId = Number(categoryResult.lastInsertRowid);
     } else {
       // Optional: verify category exists by ID
       const existing = getCategoryByIdStmt.get(categoryId);
       if (!existing) {
         // If category id given but not found, insert new category instead
-        const categoryResult = insertCategoryStmt.run(categories.category_name);
+        const categoryResult = insertCategoryStmt.run(categories.CATEGORY_NAME);
         categoryId = Number(categoryResult.lastInsertRowid);
       }
     }
