@@ -7,6 +7,10 @@ interface ExpenseComponentProps {
 
 const ExpenseComponent: React.FC<ExpenseComponentProps> = ({ expenses, setExpenses }) => {
 
+    const [editingId, setEditingId] = useState<number | null>(null);
+    const [editedReason, setEditedReason] = useState<string>('');
+    const [editedSum, setEditedSum] = useState<number>(0);
+    
     const getData = async () => {
         try {
         const data: ExpenseBackendData[] = await window.electron.getAllBackendExpenseData();
@@ -24,10 +28,6 @@ const ExpenseComponent: React.FC<ExpenseComponentProps> = ({ expenses, setExpens
             console.error('Deleting data failed:', error);
         }
     };
-
-    const [editingId, setEditingId] = useState<number | null>(null);
-    const [editedReason, setEditedReason] = useState<string>('');
-    const [editedSum, setEditedSum] = useState<number>(0);
 
     const startExpenseEditing = (expense: ExpenseBackendData) => {
         setEditingId(expense.ID);
