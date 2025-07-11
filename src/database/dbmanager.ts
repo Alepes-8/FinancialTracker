@@ -44,6 +44,24 @@ export function getCategorieConnections() {
   return stmt.all();
 }
 
+export function updateCategory(
+    categoryData: CategoryData | null,
+    ) {
+    const updateExpense = db.prepare(
+        'UPDATE CATEGORIES SET CATEGORY_NAME = @CATEGORY_NAME WHERE ID = @ID'
+    );
+
+    return updateExpense.run({
+        ID: categoryData?.ID,
+        CATEGORY_NAME: categoryData?.CATEGORY_NAME,
+    });
+}
+
+export function deleteCategory(categoryId: number) {
+    const stmt = db.prepare('DELETE FROM CATEGORIES WHERE ID = ?');
+    return stmt.run(categoryId);
+}
+
 export function updateExpense(
     expenseData: ExpenseBackendData | null,
     ) {
@@ -61,7 +79,6 @@ export function updateExpense(
 export function deleteExpense(
   expenseId: number
 ) {
-  console.log('information - ' , expenseId);
   const stmt = db.prepare('DELETE FROM EXPENSES WHERE ID = ?');
   return stmt.run(expenseId);
 }
@@ -100,18 +117,18 @@ export function addExpenseEntry(
 
   // For each category, check if it exists by ID. If no ID, insert it.
   if (categories !== null) {
-    let categoryId = categories.id;
+    let categoryId = categories.ID;
 
     if (!categoryId) {
       // Insert new category, get new id
-      const categoryResult = insertCategoryStmt.run(categories.category_name);
+      const categoryResult = insertCategoryStmt.run(categories.CATEGORY_NAME);
       categoryId = Number(categoryResult.lastInsertRowid);
     } else {
       // Optional: verify category exists by ID
       const existing = getCategoryByIdStmt.get(categoryId);
       if (!existing) {
         // If category id given but not found, insert new category instead
-        const categoryResult = insertCategoryStmt.run(categories.category_name);
+        const categoryResult = insertCategoryStmt.run(categories.CATEGORY_NAME);
         categoryId = Number(categoryResult.lastInsertRowid);
       }
     }

@@ -18,6 +18,12 @@ export const api = {
   },
   sendDeleteExpense: (payload) => {
     return sendFn('sendDeleteExpense', payload);
+  },
+  sendUpdateCategory: (payload) => {
+    return sendFn('sendUpdateCategory', payload);
+  },
+  sendDeleteCatagory: (payload) => {
+    return sendFn('sendDeleteCatagory', payload);
   }
 
 } satisfies Window['electron'];

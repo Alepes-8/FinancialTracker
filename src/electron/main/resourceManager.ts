@@ -1,7 +1,7 @@
 import osUtils from 'os-utils';
 import { BrowserWindow } from 'electron';
 import { ipcMainOn, ipcWebContentsSend } from './utils.js';
-import { getExpenses, addExpenseEntry, getCategories, deleteExpense, updateExpense} from '../../database/dbmanager.js';
+import { getExpenses, addExpenseEntry, getCategories, deleteExpense, updateExpense, updateCategory, deleteCategory} from '../../database/dbmanager.js';
 
 const SENDING_INTERVAL = 2000;
 
@@ -20,8 +20,8 @@ export function getAllBackendExpenseData() {
 export function getAllCategoriesFromDatabase() {
     const rawData = getCategories() as DatabaseCategoryRow[];
     const transformed: CategoryData[] = rawData.map((row) => ({
-        id: row.ID,
-        category_name: row.CATEGORY_NAME,
+        ID: row.ID,
+        CATEGORY_NAME: row.CATEGORY_NAME,
     }));
     return transformed
 }
@@ -43,5 +43,13 @@ export function createPayLoadListner(){
 
     ipcMainOn('sendDeleteExpense', (expenseId) => {
         deleteExpense(expenseId);
+    });
+
+    ipcMainOn('sendUpdateCategory', (payLoad) => {
+        updateCategory(payLoad);
+    });
+
+    ipcMainOn('sendDeleteCatagory', (categoryId) => {
+        deleteCategory(categoryId);
     });
 }

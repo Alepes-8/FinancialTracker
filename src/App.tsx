@@ -2,15 +2,15 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 import InputFieldView from './frontend/pages/InputFieldView';
-import GraphView from './frontend/pages/GraphsView';
+import GraphView from './frontend/pages/graphs/GraphsView';
 
 function App() {
 
   const sendMessageBackend = () => {
     window.electron.sendCreateExpense({name:'jone doe', value: 10, category:  
     { 
-        id: 76,
-        category_name: "test",
+        ID: 76,
+        CATEGORY_NAME: "test",
     }
     , date: new Date(10-12-2000)});
   }

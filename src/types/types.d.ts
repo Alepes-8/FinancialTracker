@@ -12,8 +12,8 @@ type ExpenseBackendData = {
 }
 
 type CategoryData = {
-    id: number,
-    category_name: string,
+    ID: number,
+    CATEGORY_NAME: string,
 }
 
 //the different events that we are using
@@ -24,6 +24,8 @@ type EventPlayLoadMapping = {
     sendCreateExpense: ExpenseData,
     sendUpdateExpense: ExpenseBackendData,
     sendDeleteExpense: number,
+    sendDeleteCatagory: number,
+    sendUpdateCategory: CategoryData,
 }
 
 type UnsubscribeToRepeatedBackendResonseFunction = () => void;
@@ -36,5 +38,7 @@ interface Window {
         sendCreateExpense: (expenseData: ExpenseData) => void;
         sendUpdateExpense: (expenseData: ExpenseBackendData) => void;
         sendDeleteExpense: (expenseId: number) => void;
+        sendDeleteCatagory: (catagoryId: number) => void;
+        sendUpdateCategory: (categoryData: CategoryData) => void;
     };
 }
