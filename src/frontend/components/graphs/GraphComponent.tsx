@@ -16,7 +16,7 @@ const GraphComponent: React.FC<graphComponentProps> = ({expenses}) => {
     return (
         <div>
             <div>
-                <button onClick={getSumOfCategories}> </button>
+                <button onClick={getSumOfCategories}> Get all categoryData </button>
             <h2 >Revenue vs Loss</h2>
             <Bar 
                 data={{
