@@ -13,6 +13,7 @@ const ExpenseComponent = ({ expenses, setExpenses }: ExpenseComponentProps) => {
     const [currentSortingOption, setCurrentSortingOption] = useState<string>("Recently Added");
     const [itemsPerPage, setiIemsPerPage] = useState<number>(25);
     const [visibleRange, setVisibleRange] = useState<[number, number]>([0, itemsPerPage]);  
+    const [sortingDirection, setSortingDirection] = useState<string>('desc');  
 
     const {
         editingId,
@@ -27,17 +28,25 @@ const ExpenseComponent = ({ expenses, setExpenses }: ExpenseComponentProps) => {
         setEditingId
     } = useExpenseManager(expenses, setExpenses);
 
-    /*const sortedExpenses = [...expenses].sort((a, b) => {
-        switch (currentSortingOption) {
-            case "Name":
-                return a.EXPENSE_REASON.localeCompare(b.EXPENSE_REASON);
+    const sortedExpenses = [...expenses].sort((a, b) => {
+        switch(currentSortingOption) {
             case "Amount":
-                return a.SUM - b.SUM;
-        default:
-            return a.ID - b.ID; // assuming 'DATE' exists in expense data
+                if(typeof a.SUM === 'number' && typeof b.SUM == 'number'){
+                    return sortingDirection === 'desc' ? b.SUM - a.SUM : a.SUM - b.SUM;
+                };
+                return 0;
+            case "Name":
+                if(typeof a.EXPENSE_REASON === 'string' && typeof b.EXPENSE_REASON == 'string'){
+                    return sortingDirection === 'desc' 
+                    ? a.EXPENSE_REASON.localeCompare(b.EXPENSE_REASON) 
+                    : b.EXPENSE_REASON.localeCompare(a.EXPENSE_REASON);
+                };
+                return 0;
+            default:
+                return sortingDirection === 'desc' ? b.ID - a.ID : a.ID - b.ID;
         }
     });
-*/
+
     return (
         <div>
             <button onClick={getData}>Load Expenses</button>
@@ -45,13 +54,15 @@ const ExpenseComponent = ({ expenses, setExpenses }: ExpenseComponentProps) => {
             <ExpenseControls
                 currentSortingOption={currentSortingOption}
                 setCurrentSortingOption={setCurrentSortingOption}
+                sortingDirection={sortingDirection}
+                setSortingDirection={setSortingDirection}
                 itemsPerPage={itemsPerPage}
                 setiIemsPerPage={setiIemsPerPage}
                 setVisibleRange={setVisibleRange}            
             />
             
             <ExpenseList
-                expenses={expenses.slice(visibleRange[0], visibleRange[1])}                
+                expenses={sortedExpenses.slice(visibleRange[0], visibleRange[1])}                
                 editingId={editingId}
                 editedReason={editedReason}
                 editedSum={editedSum}

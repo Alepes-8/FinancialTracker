@@ -1,18 +1,22 @@
 //Dropdowns, pagination controls
 
-import React from 'react';
+import React, { useState } from 'react';
 
 interface ExpenseControlsProps {
-  currentSortingOption: string;
-  setCurrentSortingOption: React.Dispatch<React.SetStateAction<string>>;
-  itemsPerPage: number;
-  setiIemsPerPage: React.Dispatch<React.SetStateAction<number>>;
-  setVisibleRange: React.Dispatch<React.SetStateAction<[number, number]>>;
+    currentSortingOption: string;
+    setCurrentSortingOption: React.Dispatch<React.SetStateAction<string>>;
+    sortingDirection: string;
+    setSortingDirection: React.Dispatch<React.SetStateAction<string>>; 
+    itemsPerPage: number;
+    setiIemsPerPage: React.Dispatch<React.SetStateAction<number>>;
+    setVisibleRange: React.Dispatch<React.SetStateAction<[number, number]>>;
 }
 
 const ExpenseControls: React.FC<ExpenseControlsProps> = ({
     currentSortingOption,
     setCurrentSortingOption,
+    sortingDirection,
+    setSortingDirection,
     itemsPerPage,
     setiIemsPerPage,
     setVisibleRange
@@ -20,6 +24,8 @@ const ExpenseControls: React.FC<ExpenseControlsProps> = ({
 
     const showAmount: number[] = [5,10,25,50];
     const sortingOptions: string[] = ["Recently Added","Name","Amount"];
+    const [isChecked, setIsChecked] = useState<boolean>(false);
+
 
     const updateShowingExpenses = async (newRangeSum: number) => {
         setiIemsPerPage(newRangeSum)
@@ -27,6 +33,11 @@ const ExpenseControls: React.FC<ExpenseControlsProps> = ({
             lowerBound,
             lowerBound + newRangeSum - 1,
         ]);
+    }
+
+    const changeSortingDirection = async () => {
+        setIsChecked((state) => state = !state);
+        setSortingDirection((dir) => dir === "asc" ? dir = "desc" : dir = "asc");
     }
 
     return (
@@ -54,7 +65,17 @@ const ExpenseControls: React.FC<ExpenseControlsProps> = ({
                     </option>
                 ))}
             </select>
+
+            <label>
+                <input 
+                    type='checkbox'
+                    checked={isChecked}
+                    onChange={changeSortingDirection}
+                />
+                {sortingDirection}
+            </label>
             
+                    
         </div>
     );
 };
