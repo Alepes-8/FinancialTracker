@@ -39,6 +39,25 @@ export function getCategories() {
   return stmt.all();
 }
 
+export function getCategorySumValue() {
+  const stmt = db.prepare(`
+    SELECT 
+        c.ID AS CATEGORY_ID, 
+        c.CATEGORY_NAME,  
+        SUM(e.SUM) AS TOTAL_EXPENSE 
+    FROM CATEGORIES c 
+        JOIN EXPENSE_CATEGORIES ec 
+            ON c.ID = ec.CATEGORY_ID
+            JOIN 
+                EXPENSES e ON e.ID = ec.expense_id
+                GROUP BY 
+                    c.ID, c.CATEGORY_NAME
+                ORDER BY 
+                    TOTAL_EXPENSE DESC;
+  `);
+  return stmt.all();
+}
+
 export function getCategorieConnections() {
   const stmt = db.prepare('SELECT * FROM EXPENSE_CATEGORIES');
   return stmt.all();

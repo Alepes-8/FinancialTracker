@@ -1,7 +1,7 @@
 import osUtils from 'os-utils';
 import { BrowserWindow } from 'electron';
 import { ipcMainOn, ipcWebContentsSend } from './utils.js';
-import { getExpenses, addExpenseEntry, getCategories, deleteExpense, updateExpense, updateCategory, deleteCategory} from '../../database/dbmanager.js';
+import { getExpenses, addExpenseEntry, getCategories, deleteExpense, updateExpense, updateCategory, deleteCategory, getCategorySumValue} from '../../database/dbmanager.js';
 
 const SENDING_INTERVAL = 2000;
 
@@ -24,6 +24,19 @@ export function getAllCategoriesFromDatabase() {
         CATEGORY_NAME: row.CATEGORY_NAME,
     }));
     return transformed
+}
+
+export function getAllCategorySumValues() {
+  const rawData = getCategorySumValue() as DatabaseCategorySum[];
+  
+  const transformed: CategorySumData[] = rawData.map((row) => ({
+    ID: row.CATEGORY_ID,               
+    CATEGORY_NAME: row.CATEGORY_NAME,  
+    SUM: row.TOTAL_EXPENSE            
+  }));
+
+  console.log(transformed);
+  return transformed;
 }
 
 function getBackendMessage() : Promise<number>{
