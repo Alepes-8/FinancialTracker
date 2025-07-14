@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import ExpenseComponent from '../../components/graphs/ExpenseComponent';
+import ExpenseComponent from '../../components/expenses/ExpenseComponent';
 import GraphComponent from '../../components/graphs/GraphComponent';
-import CategorieComponent from '@/frontend/components/graphs/CategorieComponent';
+import CategorieComponent from '@/frontend/components/category/CategorieComponent';
 
 const GraphView: React.FC = () => {
 
