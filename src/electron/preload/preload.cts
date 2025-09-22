@@ -9,6 +9,7 @@ export const api = {
   },
   getAllBackendExpenseData: () => ipcInvoke('getAllBackendExpenseData'),
   getAllCategories: () => ipcInvoke('getAllCategories'),
+  getAllCategorySumValues: () => ipcInvoke('getAllCategorySumValues'),
 
   sendCreateExpense: (payload) => {
     return sendFn('sendCreateExpense', payload);

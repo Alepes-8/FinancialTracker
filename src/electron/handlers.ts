@@ -1,4 +1,4 @@
-import { getAllBackendExpenseData, getAllCategoriesFromDatabase } from "./main/resourceManager.js";
+import { getAllBackendExpenseData, getAllCategoriesFromDatabase, getAllCategorySumValues } from "./main/resourceManager.js";
 import { ipcMainHandle } from "./main/utils.js";
 
 export function createHandlers(): void{
@@ -8,5 +8,9 @@ export function createHandlers(): void{
 
     ipcMainHandle("getAllCategories", () => {
         return getAllCategoriesFromDatabase();
+    });
+
+    ipcMainHandle("getAllCategorySumValues", () => {
+        return getAllCategorySumValues();
     });
 };

@@ -16,11 +16,18 @@ type CategoryData = {
     CATEGORY_NAME: string,
 }
 
+type CategorySumData = {
+    ID: number,
+    CATEGORY_NAME: string,
+    SUM: number
+}
+
 //the different events that we are using
 type EventPlayLoadMapping = {
     subscribeStats: subscribeStats,    
     getAllBackendExpenseData: GetStaticBackendData,
     getAllCategories: GetAllCategories,
+    getAllCategorySumValues: GetAllCategorySumValues,
     sendCreateExpense: ExpenseData,
     sendUpdateExpense: ExpenseBackendData,
     sendDeleteExpense: number,
@@ -35,6 +42,7 @@ interface Window {
         subscribeStats: (callback: (subscribeStats: SubscribeStats) => void) => UnsubscribeToRepeatedBackendResonseFunction;
         getAllBackendExpenseData: () => Promise<ExpenseBackendData[]>;
         getAllCategories: () => Promise<CategoryData[]>;
+        getAllCategorySumValues: () => Promise<CategorySumData[]>;
         sendCreateExpense: (expenseData: ExpenseData) => void;
         sendUpdateExpense: (expenseData: ExpenseBackendData) => void;
         sendDeleteExpense: (expenseId: number) => void;
