@@ -1,3 +1,16 @@
+# Summary
+
+This project was inspired by seeing a friend manage his monthly expenses using an Excel spreadsheet. I tried this approach myself, but found it too tedious and unsustainable over time. To address this problem, I started building an app/web application that makes it quick and easy to register expenses, while automatically sorting and structuring the data.  
+
+The goal of the app is to let users add expenses manually, but also to support importing expense data directly from debit/credit cards via BankID. The system should not be limited by card type or bank, but only rely on the format in which the data is provided. Once the data is collected, it can be viewed in clear and understandable ways—for example:  
+- Graphs showing monthly expenses, largest categories, or biggest individual expenses  
+- A simple but effective search function, allowing users to filter expenses by date, name, cost, or category  
+
+Currently, the project is in slow development and not yet in a state for effective daily use. However, the overall structure is in place, laying the foundation for future development and expansion.  
+<p align="center">
+  <img width="645" height="685" alt="485581207-5f61eedc-0eec-42b8-8376-1cb96af97c48" src="https://github.com/user-attachments/assets/6fb97b5e-3176-4ff1-bc4e-1c01e57b1eb1" />
+</p>
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
