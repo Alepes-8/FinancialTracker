@@ -11,6 +11,11 @@ Currently, the project is in slow development and not yet in a state for effecti
   <img width="645" height="685" alt="485581207-5f61eedc-0eec-42b8-8376-1cb96af97c48" src="https://github.com/user-attachments/assets/6fb97b5e-3176-4ff1-bc4e-1c01e57b1eb1" />
 </p>
 
+# Simple video
+This video shows current features that are implemented.
+
+https://github.com/user-attachments/assets/12093212-637b-494e-ad6d-df62b14cc4e8
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
