@@ -52,7 +52,7 @@ Make sure you have the following installed:
 ## Project Structure
 
 Here’s a high-level view of the repository:
-
+```
 FinancialTracker/
 ├── src/ # Application source code
 │ ├── assets/ # Static assets (images, icons, etc.)
@@ -67,7 +67,7 @@ FinancialTracker/
 │ └── main.tsx # Frontend renderer entry point
 ├── index.html # Base HTML entry point
 ├── package.json # Project metadata, dependencies, and scripts
-
+```
 
 src/ — the main TypeScript + React code.
 databaseSQLite.db — local database file.
