@@ -23,8 +23,10 @@ app.on('ready', () => {
     //TODO will not be neded
     pullResources(mainWindow);
 
+    //create the listners for the ipcMain, and ipclistner is a "event reciver". Expects to do an action. It does not expect a response back.
     createPayLoadListner();
 
+    //create the handlers for the ipcMainHandle, and ipcHandler is a "event sender". It expects to send a response backl
     createHandlers();
 
     //Sets the program image.
